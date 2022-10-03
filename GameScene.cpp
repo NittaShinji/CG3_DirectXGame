@@ -100,9 +100,7 @@ void GameScene::Draw()
 
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
-	sprite1->Draw();
-	sprite2->Draw();
-
+	
 	/// </summary>
 
 	// スプライト描画後処理
@@ -132,6 +130,9 @@ void GameScene::Draw()
 
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
+	sprite1->Draw();
+	sprite2->Draw();
+
 	/// </summary>
 
 	// デバッグテキストの描画
