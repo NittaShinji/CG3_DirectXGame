@@ -136,6 +136,9 @@ void GameScene::Draw()
 	/// </summary>
 
 	// デバッグテキストの描画
+	debugText.Print("CameraMove  WASD", 0.0f, 0.0f,3.0f);
+	debugText.Print("ObjectMove  Arrowkey", 0.0f, 100.0f,3.0f);
+
 	debugText.DrawAll(cmdList);
 
 	// スプライト描画後処理
