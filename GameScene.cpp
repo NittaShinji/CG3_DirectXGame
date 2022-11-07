@@ -10,7 +10,7 @@ GameScene::GameScene()
 GameScene::~GameScene()
 {
 	delete spriteBG;
-	delete object3d;
+	delete particleMan;
 	delete(sprite1);
 	delete(sprite2);
 }
@@ -42,8 +42,32 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 	// 3Dオブジェクト生成
-	object3d = ParticleManager::Create();
-	object3d->Update();
+	particleMan = ParticleManager::Create();
+	particleMan->Update();
+
+	for (int i = 0; i < 100; i++)
+	{
+		//x,y,z全て[-5.0f,+5.0f]でランダムに分布
+		const float md_pos = 10.0f;
+		XMFLOAT3 pos{};
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		//x,y,z全て[-0.05f,+0.05f]でランダムに分布
+		const float md_vel = 0.1f;
+		XMFLOAT3 vel{};
+		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		//重力に見立ててYのみ{-0.001f,0}でランダムに分布
+		XMFLOAT3 acc{};
+		const float md_acc = 0.001f;
+		acc.y = (float)rand() / RAND_MAX * md_acc;
+
+		//追加
+		particleMan->Add(60, pos, vel, acc);
+
+	}
 }
 
 void GameScene::Update()
@@ -84,7 +108,7 @@ void GameScene::Update()
 		sprite1->SetPosition(position);
 	}
 
-	object3d->Update();
+	particleMan->Update();
 }
 
 void GameScene::Draw()
@@ -96,7 +120,7 @@ void GameScene::Draw()
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
 	// 背景スプライト描画
-	//spriteBG->Draw();
+	spriteBG->Draw();
 
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
@@ -114,7 +138,7 @@ void GameScene::Draw()
 	ParticleManager::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	object3d->Draw();
+	particleMan->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
