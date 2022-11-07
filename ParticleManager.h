@@ -34,6 +34,7 @@ public: // サブクラス
 	struct VertexPos
 	{
 		XMFLOAT3 pos;//xyz座標
+		float scale; //スケール
 	};
 
 	// 定数バッファ用データ構造体
@@ -55,6 +56,14 @@ public: // サブクラス
 		XMFLOAT3 velocity = {};
 		//加速度
 		XMFLOAT3 accel = {};
+
+		//スケール
+		float scale = 1.0f;
+		//初期値
+		float s_scale = 1.0f;
+		//最終値
+		float e_scale = 0.0f;
+
 		//現在フレーム
 		int frame = 0;
 		//終了フレーム
@@ -222,7 +231,7 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	void Add(int life,XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel);
+	void Add(int life,XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 	/// <summary>
 	/// 座標の取得

@@ -12,6 +12,7 @@ struct VSOutput
 	//float2 uv  :TEXCOORD; // uv値
 	
     float4 pos : POSITION; //頂点座標
+    float scale : TEXCOORD; //スケール
 };
 
 struct GSOutput
