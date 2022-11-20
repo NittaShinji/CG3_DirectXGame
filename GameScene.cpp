@@ -98,18 +98,18 @@ void GameScene::Update()
 		// カメラ移動
 		if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
 		{
-			if (input->PushKey(DIK_W)) { Object::CameraMoveEyeVector({ 0.0f,+1.0f,0.0f }); }
-			else if (input->PushKey(DIK_S)) { Object::CameraMoveEyeVector({ 0.0f,-1.0f,0.0f }); }
-			if (input->PushKey(DIK_D)) { Object::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
-			else if (input->PushKey(DIK_A)) { Object::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
+			if (input->PushKey(DIK_W)) { Object::CameraMoveEyeVector({ 0.0f,+0.5f,0.0f }); }
+			else if (input->PushKey(DIK_S)) { Object::CameraMoveEyeVector({ 0.0f,-0.5f,0.0f }); }
+			if (input->PushKey(DIK_D)) { Object::CameraMoveEyeVector({ +0.5f,0.0f,0.0f }); }
+			else if (input->PushKey(DIK_A)) { Object::CameraMoveEyeVector({ -0.5f,0.0f,0.0f }); }
 		}
 		// カメラ移動
 		if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
 		{
-			if (input->PushKey(DIK_W)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,+1.0f,0.0f }); }
-			else if (input->PushKey(DIK_S)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,-1.0f,0.0f }); }
-			if (input->PushKey(DIK_D)) { Object3dBillboard::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
-			else if (input->PushKey(DIK_A)) { Object3dBillboard::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
+			if (input->PushKey(DIK_W)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,+0.5f,0.0f }); }
+			else if (input->PushKey(DIK_S)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,-0.5f,0.0f }); }
+			if (input->PushKey(DIK_D)) { Object3dBillboard::CameraMoveEyeVector({ +0.5f,0.0f,0.0f }); }
+			else if (input->PushKey(DIK_A)) { Object3dBillboard::CameraMoveEyeVector({ -0.5f,0.0f,0.0f }); }
 		}
 
 
@@ -221,8 +221,12 @@ void GameScene::Draw()
 
 	/// </summary>
 
+	if (scene == square)
+	{
+		debugText.Print("CameraMove  WASD", 0.0f, 0.0f, 3.0f);
+	}
 	// デバッグテキストの描画
-	//debugText.Print("CameraMove  WASD", 0.0f, 0.0f, 3.0f);
+	
 	//debugText.Print("ObjectMove  Arrowkey", 0.0f, 100.0f,3.0f);
 
 	debugText.DrawAll(cmdList);
