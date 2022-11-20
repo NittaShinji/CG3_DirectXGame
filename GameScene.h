@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "ParticleManager.h"
+#include "Object.h"
 #include "DebugText.h"
 
 /// <summary>
@@ -52,6 +53,13 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
+
+	enum Scene
+	{
+		square,
+		particle,
+	};
+
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 	DebugText debugText;	
@@ -61,9 +69,12 @@ private: // メンバ変数
 	/// </summary>
 	Sprite* spriteBG = nullptr;
 	ParticleManager* particleMan = nullptr;
+	Object* object = nullptr;
 
 	Sprite* sprite1 = nullptr;
 	Sprite* sprite2 = nullptr;
+
+	int scene;
 
 };
 

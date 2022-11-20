@@ -35,6 +35,7 @@ public: // サブクラス
 	{
 		XMFLOAT3 pos;//xyz座標
 		float scale; //スケール
+		XMFLOAT4 color;
 	};
 
 	// 定数バッファ用データ構造体
@@ -68,6 +69,10 @@ public: // サブクラス
 		int frame = 0;
 		//終了フレーム
 		int num_frame = 0;
+
+		XMFLOAT4 color = { 0,0,1,1 };
+
+		XMFLOAT4 colorSpeed = { 0.01,0,0,1 };
 
 	};
 
@@ -231,7 +236,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	void Add(int life,XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
+	void Add(int life,XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, XMFLOAT4 colorSpeed,float start_scale, float end_scale);
+	//void Add(int life,XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, XMFLOAT4 colorSpeed);
 
 	/// <summary>
 	/// 座標の取得
