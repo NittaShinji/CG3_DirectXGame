@@ -39,7 +39,7 @@ public: // サブクラス
 	struct ConstBufferData
 	{
 		XMMATRIX mat;	// ３Ｄ変換行列
-		XMMATRIX matBillboard; //ビルボード行列
+		//XMMATRIX matBillboard; //ビルボード行列
 	};
 
 private: // 定数

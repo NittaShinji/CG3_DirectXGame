@@ -192,10 +192,10 @@ void GameScene::Draw()
 	if (scene == square)
 	{
 		Object::PreDraw(cmdList);
-		Object3dBillboard::PreDraw(cmdList);
 		object->Draw();
-		objectBillboard->Draw();
 		Object::PostDraw();
+		Object3dBillboard::PreDraw(cmdList);
+		objectBillboard->Draw();
 		Object3dBillboard::PostDraw();
 	}
 	else if (scene == particle)

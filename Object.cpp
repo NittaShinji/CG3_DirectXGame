@@ -793,7 +793,7 @@ void Object::Update()
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	//constMap->color = color;
 	constMap->mat = matView * matProjection;	// s—ñ‚Ì‡¬
-	constMap->matBillboard = matBillboard;	// s—ñ‚Ì‡¬
+	//constMap->matBillboard = matBillboard;	// s—ñ‚Ì‡¬
 	constBuff->Unmap(0, nullptr);
 }
 
