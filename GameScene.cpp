@@ -12,6 +12,7 @@ GameScene::~GameScene()
 	delete spriteBG;
 	delete particleMan;
 	delete object;
+	delete objectBillboard;
 	delete(sprite1);
 	delete(sprite2);
 }
@@ -47,6 +48,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	// 3Dオブジェクト生成
 	object = Object::Create();
 	object->Update();
+
+	objectBillboard = Object3dBillboard::Create();
+	objectBillboard->Update();
 
 	particleMan = ParticleManager::Create();
 	//particleMan->Update();
@@ -99,8 +103,19 @@ void GameScene::Update()
 			if (input->PushKey(DIK_D)) { Object::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
 			else if (input->PushKey(DIK_A)) { Object::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
 		}
+		// カメラ移動
+		if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
+		{
+			if (input->PushKey(DIK_W)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,+1.0f,0.0f }); }
+			else if (input->PushKey(DIK_S)) { Object3dBillboard::CameraMoveEyeVector({ 0.0f,-1.0f,0.0f }); }
+			if (input->PushKey(DIK_D)) { Object3dBillboard::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
+			else if (input->PushKey(DIK_A)) { Object3dBillboard::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
+		}
+
+
 
 		object->Update();
+		objectBillboard->Update();
 	}
 	else if (scene == particle)
 	{
@@ -177,8 +192,11 @@ void GameScene::Draw()
 	if (scene == square)
 	{
 		Object::PreDraw(cmdList);
+		Object3dBillboard::PreDraw(cmdList);
 		object->Draw();
+		objectBillboard->Draw();
 		Object::PostDraw();
+		Object3dBillboard::PostDraw();
 	}
 	else if (scene == particle)
 	{

@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "ObjectBillboard.h"
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 
@@ -10,40 +10,40 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const float Object::radius = 5.0f;				// 底面の半径
-const float Object::prizmHeight = 8.0f;			// 柱の高さ
-ID3D12Device* Object::device = nullptr;
-UINT Object::descriptorHandleIncrementSize = 0;
-ID3D12GraphicsCommandList* Object::cmdList = nullptr;
-ComPtr<ID3D12RootSignature> Object::rootsignature;
-ComPtr<ID3D12PipelineState> Object::pipelinestate;
-ComPtr<ID3D12DescriptorHeap> Object::descHeap;
-ComPtr<ID3D12Resource> Object::vertBuff;
+const float Object3dBillboard::radius = 5.0f;				// 底面の半径
+const float Object3dBillboard::prizmHeight = 8.0f;			// 柱の高さ
+ID3D12Device* Object3dBillboard::device = nullptr;
+UINT Object3dBillboard::descriptorHandleIncrementSize = 0;
+ID3D12GraphicsCommandList* Object3dBillboard::cmdList = nullptr;
+ComPtr<ID3D12RootSignature> Object3dBillboard::rootsignature;
+ComPtr<ID3D12PipelineState> Object3dBillboard::pipelinestate;
+ComPtr<ID3D12DescriptorHeap> Object3dBillboard::descHeap;
+ComPtr<ID3D12Resource> Object3dBillboard::vertBuff;
 //ComPtr<ID3D12Resource> Object::indexBuff;
-ComPtr<ID3D12Resource> Object::texbuff;
-CD3DX12_CPU_DESCRIPTOR_HANDLE Object::cpuDescHandleSRV;
-CD3DX12_GPU_DESCRIPTOR_HANDLE Object::gpuDescHandleSRV;
-XMMATRIX Object::matView{};
-XMMATRIX Object::matProjection{};
-XMFLOAT3 Object::eye = { 0, 0, -5.0f };
-XMFLOAT3 Object::target = { 0, 0, 0 };
-XMFLOAT3 Object::up = { 0, 1, 0 };
-D3D12_VERTEX_BUFFER_VIEW Object::vbView{};
+ComPtr<ID3D12Resource> Object3dBillboard::texbuff;
+CD3DX12_CPU_DESCRIPTOR_HANDLE Object3dBillboard::cpuDescHandleSRV;
+CD3DX12_GPU_DESCRIPTOR_HANDLE Object3dBillboard::gpuDescHandleSRV;
+XMMATRIX Object3dBillboard::matView{};
+XMMATRIX Object3dBillboard::matProjection{};
+XMFLOAT3 Object3dBillboard::eye = { 0, 0, -5.0f };
+XMFLOAT3 Object3dBillboard::target = { 0, 0, 0 };
+XMFLOAT3 Object3dBillboard::up = { 0, 1, 0 };
+D3D12_VERTEX_BUFFER_VIEW Object3dBillboard::vbView{};
 //D3D12_INDEX_BUFFER_VIEW Object::ibView{};
 //Object::VertexPosNormalUv Object::vertices[vertexCount];
-Object::VertexPos Object::vertices[vertexCount];
+Object3dBillboard::VertexPos Object3dBillboard::vertices[vertexCount];
 
 //unsigned short Object::indices[indexCount];
-XMMATRIX Object::matBillboard = XMMatrixIdentity();
-XMMATRIX Object::matBillboardY = XMMatrixIdentity();
+XMMATRIX Object3dBillboard::matBillboard = XMMatrixIdentity();
+XMMATRIX Object3dBillboard::matBillboardY = XMMatrixIdentity();
 
 
-void Object::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+void Object3dBillboard::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
 	// nullptrチェック
 	assert(device);
 
-	Object::device = device;
+	Object3dBillboard::device = device;
 
 	// デスクリプタヒープの初期化
 	InitializeDescriptorHeap();
@@ -62,13 +62,13 @@ void Object::StaticInitialize(ID3D12Device* device, int window_width, int window
 
 }
 
-void Object::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void Object3dBillboard::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
-	assert(Object::cmdList == nullptr);
+	assert(Object3dBillboard::cmdList == nullptr);
 
 	// コマンドリストをセット
-	Object::cmdList = cmdList;
+	Object3dBillboard::cmdList = cmdList;
 
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelinestate.Get());
@@ -78,16 +78,16 @@ void Object::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
-void Object::PostDraw()
+void Object3dBillboard::PostDraw()
 {
 	// コマンドリストを解除
-	Object::cmdList = nullptr;
+	Object3dBillboard::cmdList = nullptr;
 }
 
-Object* Object::Create()
+Object3dBillboard* Object3dBillboard::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
-	Object* object = new Object();
+	Object3dBillboard* object = new Object3dBillboard();
 	if (object == nullptr) {
 		return nullptr;
 	}
@@ -102,21 +102,21 @@ Object* Object::Create()
 	return object;
 }
 
-void Object::SetEye(XMFLOAT3 eye)
+void Object3dBillboard::SetEye(XMFLOAT3 eye)
 {
-	Object::eye = eye;
+	Object3dBillboard::eye = eye;
 
 	UpdateViewMatrix();
 }
 
-void Object::SetTarget(XMFLOAT3 target)
+void Object3dBillboard::SetTarget(XMFLOAT3 target)
 {
-	Object::target = target;
+	Object3dBillboard::target = target;
 
 	UpdateViewMatrix();
 }
 
-void Object::CameraMoveVector(XMFLOAT3 move)
+void Object3dBillboard::CameraMoveVector(XMFLOAT3 move)
 {
 	XMFLOAT3 eye_moved = GetEye();
 	XMFLOAT3 target_moved = GetTarget();
@@ -133,7 +133,7 @@ void Object::CameraMoveVector(XMFLOAT3 move)
 	SetTarget(target_moved);
 }
 
-void Object::CameraMoveEyeVector(XMFLOAT3 move)
+void Object3dBillboard::CameraMoveEyeVector(XMFLOAT3 move)
 {
 	XMFLOAT3 eye_moved = GetEye();
 
@@ -144,7 +144,7 @@ void Object::CameraMoveEyeVector(XMFLOAT3 move)
 	SetEye(eye_moved);
 }
 
-void Object::InitializeDescriptorHeap()
+void Object3dBillboard::InitializeDescriptorHeap()
 {
 	HRESULT result = S_FALSE;
 
@@ -163,7 +163,7 @@ void Object::InitializeDescriptorHeap()
 
 }
 
-void Object::InitializeCamera(int window_width, int window_height)
+void Object3dBillboard::InitializeCamera(int window_width, int window_height)
 {
 	// ビュー行列の生成
 	/*matView = XMMatrixLookAtLH(
@@ -186,7 +186,7 @@ void Object::InitializeCamera(int window_width, int window_height)
 	);
 }
 
-void Object::InitializeGraphicsPipeline()
+void Object3dBillboard::InitializeGraphicsPipeline()
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -196,7 +196,7 @@ void Object::InitializeGraphicsPipeline()
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/Shaders/ObjectVS.hlsl",	// シェーダファイル名
+		L"Resources/Shaders/ObjectBillboardVS.hlsl",	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -219,7 +219,7 @@ void Object::InitializeGraphicsPipeline()
 
 	// ジオメトリシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/Shaders/ObjectGS.hlsl",	// シェーダファイル名
+		L"Resources/Shaders/ObjectBillboardGS.hlsl",	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "gs_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -243,7 +243,7 @@ void Object::InitializeGraphicsPipeline()
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/Shaders/ObjectPS.hlsl",	// シェーダファイル名
+		L"Resources/Shaders/ObjectBillboardPS.hlsl",	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -358,7 +358,7 @@ void Object::InitializeGraphicsPipeline()
 
 }
 
-void Object::LoadTexture()
+void Object3dBillboard::LoadTexture()
 {
 	HRESULT result = S_FALSE;
 
@@ -430,7 +430,7 @@ void Object::LoadTexture()
 
 }
 
-void Object::CreateModel()
+void Object3dBillboard::CreateModel()
 {
 	HRESULT result = S_FALSE;
 
@@ -583,10 +583,10 @@ void Object::CreateModel()
 
 	VertexPos verticesPoint[] =
 	{
-		{{0.0f,0.0f,0.0f}}
+		{{2.0f,0.0f,0.0f}}
 	};
 
-	std::copy(std::begin(verticesPoint),std::end(verticesPoint),vertices);
+	std::copy(std::begin(verticesPoint), std::end(verticesPoint), vertices);
 
 	//四角形のインデックスデータ
 	//unsigned short indicesSquare[] =
@@ -653,7 +653,7 @@ void Object::CreateModel()
 	//ibView.SizeInBytes = sizeof(indices);
 }
 
-void Object::UpdateViewMatrix()
+void Object3dBillboard::UpdateViewMatrix()
 {
 	// ビュー行列の更新
 	//matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
@@ -736,7 +736,7 @@ void Object::UpdateViewMatrix()
 #pragma endregion
 }
 
-bool Object::Initialize()
+bool Object3dBillboard::Initialize()
 {
 	// nullptrチェック
 	assert(device);
@@ -759,7 +759,7 @@ bool Object::Initialize()
 	return true;
 }
 
-void Object::Update()
+void Object3dBillboard::Update()
 {
 	HRESULT result;
 	//XMMATRIX matScale, matRot, matTrans;
@@ -797,11 +797,11 @@ void Object::Update()
 	constBuff->Unmap(0, nullptr);
 }
 
-void Object::Draw()
+void Object3dBillboard::Draw()
 {
 	// nullptrチェック
 	assert(device);
-	assert(Object::cmdList);
+	assert(Object3dBillboard::cmdList);
 
 	// 頂点バッファの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);

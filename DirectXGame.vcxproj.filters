@@ -45,6 +45,9 @@
     <ClCompile Include="Object.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectBillboard.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\ParticlePS.hlsl">
@@ -63,6 +66,9 @@
     <FxCompile Include="Resources\shaders\ObjectVS.hlsl" />
     <FxCompile Include="Resources\shaders\ObjectPS.hlsl" />
     <FxCompile Include="Resources\shaders\ObjectGS.hlsl" />
+    <FxCompile Include="Resources\shaders\ObjectBillboardGS.hlsl" />
+    <FxCompile Include="Resources\shaders\ObjectBillboardPS.hlsl" />
+    <FxCompile Include="Resources\shaders\ObjectBillboardVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Particle.hlsli">
@@ -72,6 +78,7 @@
       <Filter>シェーダー ファイル</Filter>
     </None>
     <None Include="Resources\shaders\Object.hlsli" />
+    <None Include="Resources\shaders\ObjectBillboard.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -96,6 +103,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBillboard.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

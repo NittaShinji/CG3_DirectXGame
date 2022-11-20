@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "ParticleManager.h"
 #include "Object.h"
+#include "ObjectBillboard.h"
 #include "DebugText.h"
 
 /// <summary>
@@ -70,6 +71,7 @@ private: // メンバ変数
 	Sprite* spriteBG = nullptr;
 	ParticleManager* particleMan = nullptr;
 	Object* object = nullptr;
+	Object3dBillboard* objectBillboard = nullptr;
 
 	Sprite* sprite1 = nullptr;
 	Sprite* sprite2 = nullptr;

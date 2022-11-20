@@ -9,7 +9,7 @@
 /// <summary>
 /// 3Dオブジェクト
 /// </summary>
-class Object
+class Object3dBillboard
 {
 private: // エイリアス
 	// Microsoft::WRL::を省略
@@ -75,7 +75,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns></returns>
-	static Object* Create();
+	static Object3dBillboard* Create();
 
 	/// <summary>
 	/// 視点座標の取得

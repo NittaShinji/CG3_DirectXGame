@@ -1,4 +1,4 @@
-#include "Object.hlsli"
+#include "ObjectBillboard.hlsli"
 
 //struct GSOutput
 //{
